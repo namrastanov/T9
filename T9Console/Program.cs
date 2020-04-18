@@ -14,7 +14,5 @@ namespace T9Console
                 .Init()
                 .Run();
         }
-
-        
     }
 }

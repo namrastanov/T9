@@ -4,6 +4,6 @@ namespace T9.IoC
 {
     public interface IModuleDI
     {
-        void RegisterDependencies(IServiceCollection services);
+        IServiceCollection RegisterDependencies(IServiceCollection services);
     }
 }

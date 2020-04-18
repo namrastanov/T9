@@ -1,6 +1,6 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using System;
-using T9Console.Extensions;
+using T9.IoC;
 
 namespace T9Tests
 {
@@ -8,8 +8,11 @@ namespace T9Tests
     {
         internal static IServiceProvider GetServiceProvider()
         {
-            return new ServiceCollection()
-                .RegisterT9InternalDI()
+            var moduleDI = new ModuleDI();
+            var services = new ServiceCollection();
+
+            return moduleDI
+                .RegisterDependencies(services)
                 .BuildServiceProvider();
         }
     }

@@ -6,11 +6,13 @@ namespace T9.IoC
 {
     public class ModuleDI: IModuleDI
     {
-        public void RegisterDependencies(IServiceCollection services)
+        public IServiceCollection RegisterDependencies(IServiceCollection services)
         {
             services.AddScoped<IEncodeWorker, EncodeWorker>();
             services.AddScoped<IMultilineEncodeWorker, MultilineEncodeWorker>();
             services.AddScoped<IEncodeService, EncodeService>();
+
+            return services;
         }
     }
 }

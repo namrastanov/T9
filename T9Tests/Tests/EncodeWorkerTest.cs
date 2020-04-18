@@ -3,7 +3,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Xunit;
 using T9.Infrastructure;
 
-namespace T9Tests
+namespace T9Tests.Tests
 {
     public class EncodeWorkerTest
     {

@@ -2,7 +2,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Xunit;
 using T9.Infrastructure;
 
-namespace T9Tests
+namespace T9Tests.Tests
 {
     public class MultilineEncodeWorkerTest
     {
@@ -18,10 +18,8 @@ namespace T9Tests
         [Fact]
         public void MultilineEncode()
         {
-            var text = "hello world\r\nim the second line";
             var mustReturnCount = 2;
-            var mustReturn_1stLine = "4433555 555666096667775553";
-            var mustReturn_2ndLine = "44460844330777733222666 66305554446633";
+            var text = $"{mustReturnCount}\r\n{Constants.HELLO_WORLD}\r\n{Constants.THE_SECOND_LINE}";
 
             var result = _mulitlineEncodeWorker
                 .SetLines(text)
@@ -31,8 +29,8 @@ namespace T9Tests
 
             Assert.NotNull(result);
             Assert.Equal(result.Count, mustReturnCount);
-            Assert.Equal(result[0], mustReturn_1stLine);
-            Assert.Equal(result[1], mustReturn_2ndLine);
+            Assert.Equal(result[0], Constants.TestCases[Constants.HELLO_WORLD]);
+            Assert.Equal(result[1], Constants.TestCases[Constants.THE_SECOND_LINE]);
         }
     }
 }

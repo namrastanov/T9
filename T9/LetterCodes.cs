@@ -45,7 +45,7 @@ namespace T9
                 return encodedLetter;
             } else
             {
-                throw new CustomException($"Letter {letter} is not supported");
+                throw new ValidationException($"Letter {letter} is not supported");
             }
         }
 

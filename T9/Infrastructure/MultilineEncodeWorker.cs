@@ -12,7 +12,7 @@ namespace T9.Infrastructure
         private IList<string> _lines;
         private int _numberOfSentences;
 
-        internal MultilineEncodeWorker(IEncodeWorker encodeWorker)
+        public MultilineEncodeWorker(IEncodeWorker encodeWorker)
         {
             _encodeWorker = encodeWorker;
         }
@@ -27,12 +27,12 @@ namespace T9.Infrastructure
         {
             if (_lines.Count < 1)
             {
-                throw new CustomException("Not enough data");
+                throw new ValidationException("Not enough data");
             }
 
             if (!int.TryParse(_lines[0], out _numberOfSentences))
             {
-                throw new CustomException("The first line should contain the number of sentences");
+                throw new ValidationException("The first line should contain the number of sentences");
             }
 
             return this;

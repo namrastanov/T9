@@ -51,22 +51,21 @@ namespace T9Console
                 try
                 {
                     encodedResult = _encodeService.Encode(inputParameterBuilder.ToString());
-                } catch(CustomException ex)
+                    Console.WriteLine("T9 encoded text:");
+                    Console.WriteLine(encodedResult);
+                    Console.WriteLine(">Do you like input more (y/n):");
+                    if (Console.ReadKey().KeyChar == 'n')
+                    {
+                        break;
+                    }
+                } catch(ValidationException ex)
                 {
                     _logger.Error(ex.Message);
-                    continue;
-                }
-
-                Console.WriteLine("T9 encoded text:");
-                Console.WriteLine(encodedResult);
-                Console.WriteLine(">Do you like input more (y/n):");
-                if (Console.ReadKey().KeyChar == 'n')
+                } finally
                 {
-                    break;
+                    inputParameterBuilder.Clear();
+                    Console.WriteLine(Environment.NewLine);
                 }
-
-                inputParameterBuilder.Clear();
-                Console.WriteLine(Environment.NewLine);
             }
         }
     }

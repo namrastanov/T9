@@ -1,9 +1,8 @@
 using T9.Services;
 using Microsoft.Extensions.DependencyInjection;
 using Xunit;
-using System.Linq;
 
-namespace T9Tests
+namespace T9Tests.Tests
 {
     public class EncodeServiceTest
     {
@@ -19,12 +18,13 @@ namespace T9Tests
         [Fact]
         public void T9Encode()
         {
-            var testCase = Constants.TestCases.First();
+            var testCase = "4\r\nhi\r\nyes\r\nfoo  bar\r\nhello world";
+            var mustReturn = "Case #1: 44 444\r\nCase #2: 999337777\r\nCase #3: 333666 6660 022 2777\r\nCase #4: 4433555 555666096667775553";
 
-            var result = _encodeService.Encode(testCase.Key);
+            var result = _encodeService.Encode(testCase);
 
             Assert.NotNull(result);
-            Assert.Equal(result, testCase.Value);
+            Assert.Equal(result, mustReturn);
         }
     }
 }
