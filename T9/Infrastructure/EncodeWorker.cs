@@ -16,29 +16,39 @@ namespace T9.Infrastructure
             return this;
         }
 
-        public string EncodeLine()
+        public IEncodeWorker EncodeLine()
         {
             _encodedLine = EncodeLine(_line);
 
+            return this;
+        }
+
+        public string GetEncoded()
+        {
             return _encodedLine;
         }
 
         private string EncodeLine(string line)
         {
             var encodedLine = new StringBuilder();
-            char previousLetter = '\0';
+            char? previousLetter = null;
             foreach(var letter in line)
             {
-                encodedLine.Append(EncodeLetter(letter, letter == previousLetter));
+                encodedLine.Append(EncodeLetter(letter, previousLetter));
                 previousLetter = letter;
             }
 
             return encodedLine.ToString();
         }
 
-        private string EncodeLetter(char s, bool previousLetterHasSameButton)
+        private string EncodeLetter(char letter, char? previousLetter)
         {
-            return $"{(previousLetterHasSameButton ? EncodedPause : string.Empty)}{Constants.LetterCodes[s]}";
+            return $"{(CheckNeedPause(letter, previousLetter) ? EncodedPause : string.Empty)}{Constants.LetterCodes[letter]}";
+        }
+
+        private bool CheckNeedPause(char letter, char? previousLetter)
+        {
+            return previousLetter.HasValue && Constants.LetterCodes[letter][0] == Constants.LetterCodes[previousLetter.Value][0];
         }
     }
 }

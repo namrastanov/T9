@@ -3,6 +3,7 @@
     public interface IEncodeWorker
     {
         IEncodeWorker SetLine(string text);
-        string EncodeLine();
+        IEncodeWorker EncodeLine();
+        string GetEncoded();
     }
 }

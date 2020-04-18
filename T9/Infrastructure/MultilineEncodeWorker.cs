@@ -1,31 +1,34 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Text;
 
 namespace T9.Infrastructure
 {
     public class MultilineEncodeWorker: IMultilineEncodeWorker
     {
-        private IList<string> _initialLines;
-        private IList<string> _encodedLines;
+        private readonly IEncodeWorker _encodeWorker;
+        private IList<string> _lines;
+        private readonly IList<string> _encodedLines = new List<string>();
         private int _numberOfSentences;
 
-        private readonly string EncodedPause = " ";
-
-        public IMultilineEncodeWorker SetInitialLines(string text)
+        public MultilineEncodeWorker(IEncodeWorker encodeWorker)
         {
-            _initialLines = text.Split(Environment.NewLine, StringSplitOptions.RemoveEmptyEntries);
+            _encodeWorker = encodeWorker;
+        }
+
+        public IMultilineEncodeWorker SetLines(string text)
+        {
+            _lines = text.Split(Environment.NewLine, StringSplitOptions.RemoveEmptyEntries);
             return this;
         }
 
         public IMultilineEncodeWorker Validate()
         {
-            if (_initialLines.Count < 1)
+            if (_lines.Count < 1)
             {
                 throw new Exception("Not valid");
             }
 
-            if (int.TryParse(_initialLines[0], out _numberOfSentences))
+            if (!int.TryParse(_lines[0], out _numberOfSentences))
             {
                 throw new Exception("The first line should contain the number of sentences");
             }
@@ -35,30 +38,22 @@ namespace T9.Infrastructure
 
         public IMultilineEncodeWorker EncodeLines()
         {
-            foreach(var line in _initialLines)
+            // take from the second item because the first item was the number of cases
+            for(var i = 1; i <= _numberOfSentences; i++)
             {
-                _encodedLines.Add(EncodeLine(line));
+                _encodedLines.Add(
+                    _encodeWorker
+                        .SetLine(_lines[i])
+                        .EncodeLine()
+                        .GetEncoded());
             }
 
             return this;
         }
 
-        private string EncodeLine(string line)
+        public IList<string> GetEncodedLines()
         {
-            var encodedLine = new StringBuilder();
-            char previousLetter = '\0';
-            foreach(var letter in line)
-            {
-                encodedLine.Append(EncodeLetter(letter, letter == previousLetter));
-                previousLetter = letter;
-            }
-
-            return encodedLine.ToString();
-        }
-
-        private string EncodeLetter(char s, bool previousLetterHasSameButton)
-        {
-            return $"{(previousLetterHasSameButton ? EncodedPause : string.Empty)}{Constants.LetterCodes[s]}";
+            return _encodedLines;
         }
     }
 }

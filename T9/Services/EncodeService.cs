@@ -1,11 +1,11 @@
-﻿using System;
+﻿using T9.Extensions;
 using T9.Infrastructure;
 
 namespace T9.Services
 {
-    public class EncodeService
+    public class EncodeService: IEncodeService
     {
-        private IMultilineEncodeWorker _encodeWorker;
+        private readonly IMultilineEncodeWorker _encodeWorker;
 
         public EncodeService(IMultilineEncodeWorker encodeWorker)
         {
@@ -14,19 +14,11 @@ namespace T9.Services
 
         public string Encode(string text)
         {
-            var result = "";
-
             return _encodeWorker
-                .SetInitialLines(text)
-                .Validate()
-                .EncodeLines()
-                .BuildEncodedResponse();
+                    .SetLines(text)
+                    .Validate()
+                    .EncodeLines()
+                    .BuildEncodeServiceResult();
         }
-
-        public static string BuildEncodedResponse(this IMultilineEncodeWorker encodeWorker)
-        {
-            return "";
-        }
-        
     }
 }
