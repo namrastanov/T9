@@ -1,8 +1,10 @@
 ﻿using System.Collections.Generic;
+using System.Runtime.CompilerServices;
 
+[assembly: InternalsVisibleTo("T9Tests")]
 namespace T9.Infrastructure
 {
-    public interface IMultilineEncodeWorker
+    internal interface IMultilineEncodeWorker
     {
         IMultilineEncodeWorker SetLines(string text);
         IMultilineEncodeWorker Validate();

@@ -4,7 +4,7 @@ using T9.Services;
 
 namespace T9.IoC
 {
-    public class InternalDI: IInternalDI
+    public class ModuleDI: IModuleDI
     {
         public void RegisterDependencies(IServiceCollection services)
         {

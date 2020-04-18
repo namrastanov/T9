@@ -2,7 +2,7 @@
 
 namespace T9.IoC
 {
-    public interface IInternalDI
+    public interface IModuleDI
     {
         void RegisterDependencies(IServiceCollection services);
     }

@@ -1,6 +1,9 @@
-﻿namespace T9.Infrastructure
+﻿using System.Runtime.CompilerServices;
+
+[assembly: InternalsVisibleTo("T9Tests")]
+namespace T9.Infrastructure
 {
-    public interface IEncodeWorker
+    internal interface IEncodeWorker
     {
         IEncodeWorker SetLine(string text);
         IEncodeWorker EncodeLine();

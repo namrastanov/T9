@@ -3,7 +3,7 @@ using T9.Infrastructure;
 
 namespace T9.Services
 {
-    public class EncodeService: IEncodeService
+    internal class EncodeService: IEncodeService
     {
         private readonly IMultilineEncodeWorker _encodeWorker;
 

@@ -1,10 +1,13 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using T9.Exceptions;
 
 namespace T9
 {
-    public static class Constants
+    public static class LetterCodes
     {
-        public static IDictionary<char, string> LetterCodes = new Dictionary<char, string>()
+        private static readonly IDictionary<char, string> _letterCodes = new Dictionary<char, string>()
         {
             {'a', "2" },
             {'b', "22" },
@@ -34,5 +37,21 @@ namespace T9
             {'z', "9999" },
             {' ', "0" }
         };
+
+        public static string GetEncodedLetter(char letter)
+        {
+            if (_letterCodes.TryGetValue(letter, out string encodedLetter))
+            {
+                return encodedLetter;
+            } else
+            {
+                throw new CustomException($"Letter {letter} is not supported");
+            }
+        }
+
+        public static char GetLetterCode(char letter)
+        {
+            return GetEncodedLetter(letter).First();
+        }
     }
 }

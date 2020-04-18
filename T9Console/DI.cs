@@ -2,7 +2,7 @@
 using System;
 using T9Console.Extensions;
 
-namespace T9Tests
+namespace T9Console
 {
     internal static class DI
     {
