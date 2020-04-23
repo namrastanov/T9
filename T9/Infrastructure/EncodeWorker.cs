@@ -30,25 +30,31 @@ namespace T9.Infrastructure
 
         private string EncodeLine(string line)
         {
+            if (line == null)
+            {
+                return string.Empty;
+            }
+
             var encodedLine = new StringBuilder();
-            char? previousLetter = null;
+            string previousEncodedLetter = null;
             foreach(var letter in line)
             {
-                encodedLine.Append(GetEncodeLetter(letter, previousLetter));
-                previousLetter = letter;
+                var encodedLetter = LetterCodes.GetEncodedLetter(letter);
+                encodedLine.Append(EncodeLetter(encodedLetter, previousEncodedLetter));
+                previousEncodedLetter = encodedLetter;
             }
 
             return encodedLine.ToString();
         }
 
-        private string GetEncodeLetter(char letter, char? previousLetter)
+        private string EncodeLetter(string encodedLetter, string previousEncodedLetter)
         {
-            return $"{(CheckNeedPause(letter, previousLetter) ? ENCODED_PAUSE : string.Empty)}{LetterCodes.GetEncodedLetter(letter)}";
+            return $"{(CheckNeedPause(encodedLetter, previousEncodedLetter) ? ENCODED_PAUSE : string.Empty)}{encodedLetter}";
         }
 
-        private bool CheckNeedPause(char letter, char? previousLetter)
+        private bool CheckNeedPause(string encodedLetter, string previousEncodedLetter)
         {
-            return previousLetter.HasValue && LetterCodes.GetLetterCode(letter) == LetterCodes.GetLetterCode(previousLetter.Value);
+            return !string.IsNullOrEmpty(previousEncodedLetter) && encodedLetter[0] == previousEncodedLetter[0];
         }
     }
 }

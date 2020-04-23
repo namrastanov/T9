@@ -20,6 +20,7 @@ namespace T9.Infrastructure
         public IMultilineEncodeWorker SetLines(string text)
         {
             _lines = text.Split(Environment.NewLine, StringSplitOptions.RemoveEmptyEntries);
+
             return this;
         }
 
@@ -33,6 +34,11 @@ namespace T9.Infrastructure
             if (!int.TryParse(_lines[0], out _numberOfSentences))
             {
                 throw new ValidationException("The first line should contain the number of sentences");
+            }
+
+            if (_lines.Count - 1 != _numberOfSentences)
+            {
+                throw new ValidationException("Number of sentences is not equal with real number of lines");
             }
 
             return this;

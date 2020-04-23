@@ -27,5 +27,17 @@ namespace T9Tests.Tests
             Assert.NotNull(result);
             Assert.Equal(result, Constants.TestCases[Constants.HELLO_WORLD]);
         }
+
+        [Fact]
+        public void EncodeLine_checkForNull()
+        {
+            var result = _encodeWorker
+                .SetLine(null)
+                .EncodeLine()
+                .GetEncoded();
+
+            Assert.NotNull(result);
+            Assert.Equal(result, string.Empty);
+        }
     }
 }

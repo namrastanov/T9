@@ -51,7 +51,7 @@ namespace T9
 
         public static char GetLetterCode(char letter)
         {
-            return GetEncodedLetter(letter).First();
+            return GetEncodedLetter(letter)[0];
         }
     }
 }
